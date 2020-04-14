@@ -5,12 +5,14 @@ import assessemnts from "../Assets/Assessments.json";
 export default function loadAssessmentsFile(dateStart) {
   const data = assessemnts;
   console.log("AFile dateStart in", dateStart);
-  const date = dateStart;
+  var date = new Date(dateStart);
+
+  //const date = dateStart;
   const options = {
     weekday: "long",
     year: "numeric",
     month: "long",
-    day: "numeric",
+    day: "numeric"
   };
 
   data.map((data, i) => {

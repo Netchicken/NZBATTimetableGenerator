@@ -1,10 +1,13 @@
 import React from "react";
-import loadAssessmentsFile from "./Assessments";
+//import loadAssessmentsFile from "./Assessments";
 import { useTable } from "react-table"; //https://react-table.js.org/installation
 import styled from "styled-components";
-
+import assessemnts from "../Assets/Assessments.json";
 //https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/basic?file=/src/App.js:1844-1855
 //https://react-table.js.org/
+
+//https://alligator.io/react/usememo/
+
 const Styles = styled.div`
   padding: 1rem;
 
@@ -42,19 +45,19 @@ function Table({ columns, data }) {
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow,
+    prepareRow
   } = useTable({
     columns,
-    data,
+    data
   });
 
   // Render the UI for your table
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map((headerGroup) => (
+        {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
+            {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
           </tr>
@@ -65,7 +68,7 @@ function Table({ columns, data }) {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
+              {row.cells.map(cell => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
             </tr>
@@ -76,6 +79,28 @@ function Table({ columns, data }) {
   );
 }
 
+function loadAssessmentsFile(startDate) {
+  const data = assessemnts;
+  console.log("AFile dateStart in", startDate);
+  var date = new Date(startDate);
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  };
+
+  const AssWithDates = data.map(item => {
+    //  console.log("in", data.DueDate + " " + data.days);
+    var newdate = new Date(date.setDate(date.getDate() + item.days));
+    item.DueDate = newdate.toLocaleDateString(undefined, options);
+    console.log("out", item.DueDate);
+    return item;
+  });
+
+  return AssWithDates;
+}
+
 function Table2(props) {
   const columns = React.useMemo(
     () => [
@@ -84,45 +109,50 @@ function Table2(props) {
         columns: [
           {
             Header: "ID",
-            accessor: "id",
+            accessor: "id"
           },
           {
             Header: "Module",
-            accessor: "group",
+            accessor: "group"
           },
           {
             Header: "Assessment ID",
-            accessor: "AssID",
+            accessor: "AssID"
           },
           {
             Header: "Assessment Name",
-            accessor: "AssName",
+            accessor: "AssName"
           },
 
           {
             Header: "Date Due",
-            accessor: "DueDate",
+            accessor: "DueDate"
           },
           {
             Header: "Passed",
-            accessor: "passed",
+            accessor: "passed"
           },
           {
             Header: "days",
-            accessor: "days",
-          },
-        ],
-      },
+            accessor: "days"
+          }
+        ]
+      }
     ],
     []
   );
-  const date = props.startDate;
-  console.log("Table2 props", date);
-  const data = React.useMemo(() => loadAssessmentsFile(date), [date]);
+
+  console.log("Table2 props", props.startDate);
+
+  //https://alligator.io/react/usememo/ watches startDate, if no change just returns the same data without calculating it The dependencies list are the elements useMemo watches: if there are no changes the function result will stay the same, otherwise it will re-run the function.
+
+  //startDate is including time so of course it ALWAYS changes!
+  const data = React.useMemo(() => loadAssessmentsFile(props.startDate), [
+    props.startDate
+  ]);
 
   return (
     <Styles>
-      Course Start Date: {date.toDateString()}
       <Table columns={columns} data={data} />
     </Styles>
   );

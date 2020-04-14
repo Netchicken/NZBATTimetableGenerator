@@ -1,5 +1,4 @@
 import React from "react";
-
 import Table2 from "./Table2";
 
 import DatePicker from "react-datepicker";
@@ -9,8 +8,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedName: "",
-      startDate: new Date(),
+      startDate: new Date()
     };
   }
 
@@ -20,16 +18,15 @@ class Home extends React.Component {
 
   handleCalendarOpen = () => console.log("Calendar opened");
 
-  handleChange = (date) => {
-    startdate2 = date;
+  handleChange = date => {
+    // startdate2 = date.toDateString();
+    console.log("startdate handlechange ", startdate2);
 
     this.setState(
       () => ({
-        startDate: date,
+        startDate: date
       }),
-      () => {
-        console.log("startdate handlechange ", startdate2);
-      }
+      () => {}
     );
   };
 
@@ -39,7 +36,7 @@ class Home extends React.Component {
         <h1>NZBat Assessment Dates</h1>
         <span>
           <DatePicker
-            selected={startdate2}
+            selected={this.state.startDate}
             onChange={this.handleChange}
             withPortal
             peekNextMonth
@@ -50,10 +47,10 @@ class Home extends React.Component {
             onCalendarOpen={this.handleCalendarOpen}
             dateFormat="dd/MM/yyy"
           />
-          {/* Course Start Date: {this.state.startDate.toDateString()} */}
+          Course Start Date: {this.state.startDate.toDateString()}
         </span>
 
-        <Table2 startDate={startdate2}></Table2>
+        <Table2 startDate={this.state.startDate.toDateString()}></Table2>
       </div>
     );
   }
