@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "June",
+    "startDate": "20-6-2020",
+    "days": 14,
+    "daysbreak": []
+  },
+  {
+    "id": 2,
+    "name": "September",
+    "startDate": "5-9-2020",
+    "days": 14,
+    "daysbreak": []
+  }
+]

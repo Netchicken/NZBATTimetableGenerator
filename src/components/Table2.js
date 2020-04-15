@@ -2,7 +2,14 @@ import React from "react";
 //import loadAssessmentsFile from "./Assessments";
 import { useTable } from "react-table"; //https://react-table.js.org/installation
 import styled from "styled-components";
-import assessemnts from "../Assets/Assessments.json";
+//import assessemnts from "../Assets/Assessments.json";
+//import collegeHolidays from "../Assets/Holidays.json";
+import {
+  loadAssessmentsFile,
+  GenerateHolidayDates,
+  GetHolidayData
+} from "../components/Dates";
+
 //https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/basic?file=/src/App.js:1844-1855
 //https://react-table.js.org/
 
@@ -79,27 +86,59 @@ function Table({ columns, data }) {
   );
 }
 
-function loadAssessmentsFile(startDate) {
-  const data = assessemnts;
-  console.log("AFile dateStart in", startDate);
-  var date = new Date(startDate);
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  };
+//Moment(this.state.date, "DD-MM-YY").add(1, "d")
 
-  const AssWithDates = data.map(item => {
-    //  console.log("in", data.DueDate + " " + data.days);
-    var newdate = new Date(date.setDate(date.getDate() + item.days));
-    item.DueDate = newdate.toLocaleDateString(undefined, options);
-    console.log("out", item.DueDate);
-    return item;
-  });
+// function GenerateHolidayDates() {
+//   const holidays = collegeHolidays;
 
-  return AssWithDates;
-}
+//   //push all the days that are a break to daysbreak array
+//   const allHolidays = holidays.map(item => {
+//     var holidayStartDate = new Date(moment(item.startDate, "DD-MM-YYYY")); //turn the date string to a date
+//     //loop through the days and add 1
+//     var i = 1;
+//     for (i = 0; i < item.days; i++) {
+//       var singledate = new Date(
+//         moment(holidayStartDate, "DD-MM-YY").add(i, "d")
+//       );
+//       //holidayStartDate.setDate(holidayStartDate.getDate() + i)
+//       //);
+//       item.daysbreak.push(singledate.toDateString()); //add dates to the array
+//       console.log(
+//         "day count " + item.daysbreak.length,
+//         item.daysbreak.toString()
+//       );
+//     }
+//   });
+//   return allHolidays;
+// }
+
+// function loadAssessmentsFile(startDate) {
+//   const data = assessemnts;
+
+//   console.log("AFile dateStart in", startDate);
+//   var date = new Date(startDate);
+
+//   const options = {
+//     weekday: "long",
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric"
+//   };
+//   const AssWithDates = data.map(item => {
+//     //  console.log("in", data.DueDate + " " + data.days);
+//     var newdate = new Date(date.setDate(date.getDate() + item.days));
+//     item.DueDate = newdate.toLocaleDateString(undefined, options);
+//     console.log("out", item.DueDate);
+//     return item;
+//   });
+
+//   GenerateHolidayDates().map(item => {
+//     console.log(item);
+//     //return item;
+//   });
+
+//   return AssWithDates;
+// }
 
 function Table2(props) {
   const columns = React.useMemo(
