@@ -41,11 +41,14 @@ export function GenerateHolidayDates() {
       //holidayStartDate.setDate(holidayStartDate.getDate() + i)
       //);
       item.daysbreak.push(singledate.toDateString()); //add dates to the array
+
       console.log(
-        "day count " + item.daysbreak.length,
+        item.name + " day count " + item.daysbreak.length,
         item.daysbreak.toString()
       );
     }
+    return item;
   });
   return allHolidays;
+  //
 }

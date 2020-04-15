@@ -56,15 +56,26 @@ class Home extends React.Component {
             onCalendarOpen={this.handleCalendarOpen}
             dateFormat="dd/MM/yyy"
           />
-          Course Start Date: {this.state.startDate.toDateString()}
+          <h3>Course Start Date: {this.state.startDate.toDateString()}</h3>
         </span>
         <Table2 startDate={this.state.startDate.toDateString()}></Table2>
-
-        {GetHolidayData.map((item, index) => {
+        <h3>Holiday Dates</h3>
+        {GetHolidayData().map((item, index) => {
+          return (
+            <ul className="list-group list-group-flush">
+              <li key={item.name}>
+                {item.name} {item.startDate}
+              </li>
+            </ul>
+          );
+        })}
+        <h3>Each Holiday Dates</h3>
+        {GenerateHolidayDates().map((item, index) => {
           return (
             <ul className="list-group list-group-flush">
               <li>
-                {item.name} {item.startDate}{" "}
+                {item.daysbreak.length} Days - {item.name} <br></br>-{" "}
+                {item.daysbreak}
               </li>
             </ul>
           );
