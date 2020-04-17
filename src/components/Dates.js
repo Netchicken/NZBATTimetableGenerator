@@ -3,42 +3,113 @@ import collegeHolidays from "../Assets/Holidays.json";
 import moment from "moment";
 //https://www.sitepoint.com/managing-dates-times-using-moment-js/
 
-export function loadAssessmentsFile(startDate) {
+export function loadAssessmentsFile(
+  startDate,
+  ShowHolidays,
+  CalculateHolidays
+) {
   const data = assessemnts; //load from file
-
+  const holidaysData = collegeHolidays; //load from file
+  var addDaysAfterBreak = 0; //must be global
   console.log("date.js dateStart in", startDate);
   var date = new Date(startDate); //convert string to date
 
-  var allHolidays = GenerateHolidayDates();
-
   //loop through each entry and calculate dates adding days to assessment
   //moment(date, "DD-MM-YY") this is only parsing date, not formatting date
-  const AssWithDates = data.map(item => {
+  const AssWithDates = data.map((item) => {
+    //add startdate to days for each assessment return new date
     var newdate = new Date(moment(date, "DD-MM-YY").add(item.days, "d"));
     newdate = moment(newdate).format("DD-MM-YY");
+    // console.log("date.js newdate", newdate);
 
-    //compare holiday dates with assessment dates
-    allHolidays.map(item => {
-      console.log("date match assess date ", newdate);
-      // console.log("date match holiday date ", item.daysbreak);
-      //if the day is in the holiday dates
-      if (item.daysbreak.includes(newdate)) {
-        // make the duedate the last day of the holiday and count the date difference to add to the folling dates
-        newdate = new Date(
-          moment(item.daysbreak[item.daysbreak.length - 1]).format("DD-MM-YY")
-        );
-        console.log("date match ", "true " + newdate);
-        //    newdate.add(item.days,"d"); //add in the holidays
-      }
-      console.log("date match ", "false");
-    });
-
-    item.DueDate = moment(newdate).format("MMM Do"); //format date for viewing
-    console.log("out", item.DueDate);
+    //todo Fix formatting with localenewdate; //
+    item.DueDate = newdate; //    moment(newdate).format("dddd, MMMM Do YY"); //format date for viewing
+    console.log("out ", item.DueDate + " " + item.holiday);
     return item;
   });
 
+  //Pass in the entire Array instead of nesting it.
+  // if (CalculateHolidays) {
+  //compare holiday dates with assessment dates
+  const outputdata = HolidayMap(
+    AssWithDates,
+    addDaysAfterBreak,
+    ShowHolidays,
+    holidaysData
+  );
+
+  return outputdata;
+  // }
+
+  // return AssWithDates;
+}
+
+//newdate = startdate + days to assesment
+//item = data row from assessments
+function HolidayMap(
+  AssWithDates,
+  addDaysAfterBreak,
+  ShowHolidays,
+  holidaysData
+) {
+  //holds the unmutated date to subtract from the mutated date to get day count
+
+  var allHolidays = GenerateHolidayDates(holidaysData);
+
+  AssWithDates.map((item) => {
+    allHolidays.map((item2) => {
+      //console.log("date match assess date ", newdate);
+
+      //if the day is in the holiday dates
+      if (item2.daysbreak.includes(item.DueDate)) {
+        // make the duedate the last day of the holiday
+        var oldDueDate = item.DueDate; //keep the old due date to work out date diff
+        //item.DueDate is the new assessment end date, its the date match from the holidays array
+        item.DueDate = item2.daysbreak[item2.daysbreak.length - 1];
+
+        //new Date(moment(item2.daysbreak[item2.daysbreak.length - 1]).format("DD-MM-YY")
+        // );
+        console.log(
+          "date match ",
+          "true " +
+            oldDueDate +
+            " ==> " +
+            item2.daysbreak[item2.daysbreak.length - 1]
+        );
+
+        //   if (ShowHolidays) {
+        // count days to add to next assessments
+        addDaysAfterBreak += addDaysAfterBreakF(oldDueDate, item.DueDate); //covers multiple holidays
+        console.log("date addDaysAfterBreak ", addDaysAfterBreak);
+        // }
+
+        item.holiday = item2.name + " Break";
+
+        //    newdate.add(item.days,"d"); //add in the holidays
+
+        //if there IS NO match with the holidays, then you still need to add on the difference for the LAST holiday up the tree, all dates get pushed later.
+      } else {
+        item.holiday = "no";
+      }
+      //   if (addDaysAfterBreak !== isNaN) {
+      //     item.DueDate = new Date(
+      //       moment(item.DueDate).add(addDaysAfterBreak, "days")
+      //     );
+      //     console.log("date match false", item.DueDate);
+      //   } else {
+      //     console.log("date match false", item.DueDate);
+      //   }
+      // }
+    });
+  });
+  //}
   return AssWithDates;
+}
+//Find the difference between dates and add them to assessment dates https://www.sitepoint.com/managing-dates-times-using-moment-js/
+function addDaysAfterBreakF(oldNewDate, newdate) {
+  const dateOld = moment(oldNewDate);
+  const dateNew = moment(newdate); //.format("DD-MM-YY").toString();
+  return dateOld.diff(dateNew, "days"); //covers multiple holidays
 }
 
 export function GetHolidayData() {
@@ -47,11 +118,11 @@ export function GetHolidayData() {
   return holidays;
 }
 
+//Working
 export function GenerateHolidayDates() {
-  const holidays = collegeHolidays;
-
   //push all the days that are a break to daysbreak array
-  const allHolidays = holidays.map(item => {
+  const holidaysData = collegeHolidays; //load from file THIS IS NOT GOOD!!!!
+  const allHolidays = holidaysData.map((item) => {
     var holidayStartDate = new Date(moment(item.startDate, "DD-MM-YY")); //turn the date string to a date
     //loop through the days and add 1
     var i = 1;

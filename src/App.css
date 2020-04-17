@@ -4,14 +4,14 @@
 
 body {
   font-family: "montserrat", sans-serif;
-  /* background-color: #adc9e4; */
+  background-color: #dee6ec;
   /* text-align: center; */
   /* height: 100% !important; */
 }
 
 .container {
-  display: flex;
-  flex-flow: row wrap;
+  /* display: flex;
+  flex-flow: row wrap; */
   font-weight: bold;
   text-align: center;
 }
@@ -76,17 +76,17 @@ body {
     text-shadow: 1px px rgba(50, 50, 70, 0.5);
 } */
 h2 h3 {
-  color: #fff;
+  color: rgb(194, 12, 240);
   font-size: 40px;
   font-weight: 200;
-  text-align: center;
+  /* text-align: center; */
 }
 
 h4 {
-  color: #fff;
+  color: rgb(71, 9, 241);
   font-size: 30px;
   font-weight: 200;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .winLose {

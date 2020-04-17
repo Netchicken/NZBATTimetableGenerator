@@ -6,7 +6,8 @@
     "AssName": "Demonstrate and apply knowledge of communication process theory ",
     "DueDate": "",
     "passed": false,
-    "days": 7
+    "days": 7,
+    "holiday": ""
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "AssName": "Employ customer service techniques to accommodate customer behavioural styles in a workplace",
     "DueDate": "",
     "passed": false,
-    "days": 7
+    "days": 7,
+    "holiday": ""
   },
   {
     "id": 3,
@@ -24,7 +26,8 @@
     "AssName": "Produce documents for a workplace using a computer",
     "DueDate": "",
     "passed": false,
-    "days": 7
+    "days": 7,
+    "holiday": ""
   },
   {
     "id": 4,
@@ -33,7 +36,8 @@
     "AssName": "Customise software features and create document templates for generic text and information management",
     "DueDate": "",
     "passed": false,
-    "days": 7
+    "days": 7,
+    "holiday": ""
   },
   {
     "id": 5,
@@ -42,7 +46,8 @@
     "AssName": "Contribute within a team or group which has an objective",
     "DueDate": "",
     "passed": false,
-    "days": 14
+    "days": 14,
+    "holiday": ""
   },
   {
     "id": 6,
@@ -51,7 +56,8 @@
     "AssName": "Demonstrate and apply knowledge of office equipment and administration processes ",
     "DueDate": "",
     "passed": false,
-    "days": 14
+    "days": 14,
+    "holiday": ""
   },
   {
     "id": 7,
@@ -60,7 +66,8 @@
     "AssName": "Create and use a computer database to provide a solution for organisation use (Uses MS Access)",
     "DueDate": "",
     "passed": false,
-    "days": 21
+    "days": 21,
+    "holiday": ""
   },
   {
     "id": 8,
@@ -69,7 +76,8 @@
     "AssName": "Produce desktop published documents for organisation use (Uses MS Publisher)",
     "DueDate": "",
     "passed": false,
-    "days": 21
+    "days": 21,
+    "holiday": ""
   },
   {
     "id": 9,
@@ -78,7 +86,8 @@
     "AssName": "Create a computer spreadsheet to provide a solution for organisation use [Uses MS Excel])",
     "DueDate": "",
     "passed": false,
-    "days": 35
+    "days": 35,
+    "holiday": ""
   },
   {
     "id": 10,
@@ -87,7 +96,8 @@
     "AssName": "Integrate text and images and manage multiple files for generic text and information management [Uses MS Word, Excel, Access ",
     "DueDate": "",
     "passed": false,
-    "days": 35
+    "days": 35,
+    "holiday": ""
   },
   {
     "id": 11,
@@ -96,7 +106,8 @@
     "AssName": "Use office information, copying, and telecommunication systems ",
     "DueDate": "",
     "passed": false,
-    "days": 49
+    "days": 49,
+    "holiday": ""
   },
   {
     "id": 12,
@@ -105,6 +116,7 @@
     "AssName": "Write minutes for a formal meeting",
     "DueDate": "",
     "passed": false,
-    "days": 49
+    "days": 49,
+    "holiday": ""
   }
 ]

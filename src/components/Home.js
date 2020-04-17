@@ -1,25 +1,28 @@
 import React from "react";
 import Table2 from "./Table2";
-
+import "../App.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   loadAssessmentsFile,
   GenerateHolidayDates,
-  GetHolidayData
+  GetHolidayData,
 } from "../components/Dates";
+
+import Toggle from "react-toggle";
+import "react-toggle/style.css";
+
 var startdate2 = new Date();
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date()
+      startDate: new Date(),
+      ShowHolidays: false,
+      CalculateHolidays: false,
     };
   }
-
-  // GenerateHolidayDates().map(item => {
-  //   console.log(item);
-  // });
 
   handleCalendarClose = () => {
     console.log("Calendar closed", startdate2);
@@ -27,13 +30,27 @@ class Home extends React.Component {
 
   handleCalendarOpen = () => console.log("Calendar opened");
 
-  handleChange = date => {
+  ShowHolidaysChange = (event) => {
+    this.setState(() => ({
+      ShowHolidays: !this.state.ShowHolidays,
+    }));
+    console.log("ShowHolidays ", this.state.ShowHolidays);
+  };
+
+  CalculateHolidaysChange = (event) => {
+    this.setState(() => ({
+      CalculateHolidays: !this.state.CalculateHolidays,
+    }));
+    console.log("CalculateHolidays ", this.state.CalculateHolidays);
+  };
+
+  handleChange = (date) => {
     // startdate2 = date.toDateString();
     console.log("startdate handlechange ", startdate2);
 
     this.setState(
       () => ({
-        startDate: date
+        startDate: date,
       }),
       () => {}
     );
@@ -41,8 +58,21 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>NZBat Assessment Dates</h1>
+        <Toggle
+          // id="cheese-status"
+          defaultChecked={this.state.ShowHolidays}
+          onChange={this.ShowHolidaysChange}
+        />
+        <label htmlFor="cheese-status">Show Holidays</label>
+
+        <Toggle
+          //  id="cheese-status"
+          defaultChecked={this.state.CalculateHolidays}
+          onChange={this.CalculateHolidaysChange}
+        />
+        <label htmlFor="cheese-status">Calculate Holidays</label>
         <span>
           <DatePicker
             selected={this.state.startDate}
@@ -58,8 +88,13 @@ class Home extends React.Component {
           />
           <h3>Course Start Date: {this.state.startDate.toDateString()}</h3>
         </span>
-        <Table2 startDate={this.state.startDate.toDateString()}></Table2>
+        <Table2
+          startDate={this.state.startDate.toDateString()}
+          ShowHolidays={this.state.ShowHolidays}
+          CalculateHolidays={this.state.CalculateHolidays}></Table2>
+
         <h3>Holiday Dates</h3>
+
         {GetHolidayData().map((item, index) => {
           return (
             <ul className="list-group list-group-flush">
@@ -70,6 +105,7 @@ class Home extends React.Component {
           );
         })}
         <h3>Each Holiday Dates</h3>
+
         {GenerateHolidayDates().map((item, index) => {
           return (
             <ul className="list-group list-group-flush">

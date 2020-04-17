@@ -7,7 +7,7 @@ import styled from "styled-components";
 import {
   loadAssessmentsFile,
   GenerateHolidayDates,
-  GetHolidayData
+  GetHolidayData,
 } from "../components/Dates";
 
 //https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/basic?file=/src/App.js:1844-1855
@@ -52,19 +52,19 @@ function Table({ columns, data }) {
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
+    prepareRow,
   } = useTable({
     columns,
-    data
+    data,
   });
 
   // Render the UI for your table
   return (
     <table {...getTableProps()}>
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
           </tr>
@@ -75,7 +75,7 @@ function Table({ columns, data }) {
           prepareRow(row);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
+              {row.cells.map((cell) => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
             </tr>
@@ -148,35 +148,35 @@ function Table2(props) {
         columns: [
           {
             Header: "ID",
-            accessor: "id"
+            accessor: "id",
           },
           {
             Header: "Module",
-            accessor: "group"
+            accessor: "group",
           },
           {
             Header: "Assessment ID",
-            accessor: "AssID"
+            accessor: "AssID",
           },
           {
             Header: "Assessment Name",
-            accessor: "AssName"
+            accessor: "AssName",
           },
 
           {
             Header: "Date Due",
-            accessor: "DueDate"
+            accessor: "DueDate",
           },
           {
-            Header: "Passed",
-            accessor: "passed"
+            Header: "Break",
+            accessor: "holiday",
           },
           {
             Header: "days",
-            accessor: "days"
-          }
-        ]
-      }
+            accessor: "days",
+          },
+        ],
+      },
     ],
     []
   );
@@ -186,9 +186,15 @@ function Table2(props) {
   //https://alligator.io/react/usememo/ watches startDate, if no change just returns the same data without calculating it The dependencies list are the elements useMemo watches: if there are no changes the function result will stay the same, otherwise it will re-run the function.
 
   //startDate is including time so of course it ALWAYS changes!
-  const data = React.useMemo(() => loadAssessmentsFile(props.startDate), [
-    props.startDate
-  ]);
+  const data = React.useMemo(
+    () =>
+      loadAssessmentsFile(
+        props.startDate,
+        props.ShowHolidays,
+        props.CalculateHolidays
+      ),
+    [props.startDate, props.ShowHolidays, props.CalculateHolidays] //this is where change is watched
+  );
 
   return (
     <Styles>
