@@ -79,7 +79,7 @@ class Home extends React.Component {
         />
         <label htmlFor="cheese-status">Show Holidays</label> */}
         <div className="containerSub">
-          Select Your Start Date
+          1. Select Your Start Date
           <DatePicker
             todayButton="Today"
             selected={this.state.startDate}
@@ -94,11 +94,11 @@ class Home extends React.Component {
             dateFormat="dd/MM/yyy"
             // customInput={this.ExampleCustomInput}
           />
+          <label htmlFor="cheese-status">2. Calculate effect of Holidays</label>
           <Toggle
             defaultChecked={this.state.CalculateHolidays}
             onChange={this.CalculateHolidaysChange}
           />
-          <label htmlFor="cheese-status">Calculate effect of Holidays</label>
           <h3>
             Course Start Date:
             {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}
@@ -110,22 +110,23 @@ class Home extends React.Component {
           ShowHolidays={this.state.ShowHolidays}
           CalculateHolidays={this.state.CalculateHolidays}
         ></Table2>
+        <div className="containerSub">
+          <h3>Holiday Dates</h3>
 
-        <h3>Holiday Dates</h3>
-
-        {GetHolidayData().map((item, index) => {
-          return (
-            <ul className="list-group list-group-flush">
-              <li key={item.name}>
-                {item.name}{" "}
-                {moment(item.startDate, "DD-MM-YY").format(
-                  "dddd, MMMM Do YYYY"
-                )}
-              </li>
-            </ul>
-          );
-        })}
-        <h3>Each Holiday Dates</h3>
+          {GetHolidayData().map((item, index) => {
+            return (
+              <ul className="list-group list-group-flush">
+                <li key={item.name}>
+                  {item.name}{" "}
+                  {moment(item.startDate, "DD-MM-YY").format(
+                    "dddd, MMMM Do YYYY"
+                  )}
+                </li>
+              </ul>
+            );
+          })}
+        </div>
+        {/* <h3>Each Holiday Dates</h3>
 
         {GenerateHolidayDates().map((item, index) => {
           return (
@@ -136,7 +137,7 @@ class Home extends React.Component {
               </li>
             </ul>
           );
-        })}
+        })} */}
       </div>
     );
   }

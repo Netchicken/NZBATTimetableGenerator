@@ -19,6 +19,13 @@ const Styles = styled.div`
   padding: 1rem;
 
   table {
+    border-radius: 8px;
+
+    max-width: 100%;
+    height: auto;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+
+    background: white;
     border-spacing: 0;
     border: 1px solid black;
 
