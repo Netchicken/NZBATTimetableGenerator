@@ -1,14 +1,15 @@
 import React from "react";
 import Table2 from "./Table2";
+import "react-datepicker/dist/react-datepicker.css";
 import "../App.css";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 import {
   loadAssessmentsFile,
   GenerateHolidayDates,
   GetHolidayData,
 } from "../components/Dates";
-
+import moment from "moment";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 
@@ -41,7 +42,7 @@ class Home extends React.Component {
     this.setState(() => ({
       CalculateHolidays: !this.state.CalculateHolidays,
     }));
-    console.log("CalculateHolidays ", this.state.CalculateHolidays);
+    console.log("Home.js CalculateHolidays ", this.state.CalculateHolidays);
   };
 
   handleChange = (date) => {
@@ -56,25 +57,31 @@ class Home extends React.Component {
     );
   };
 
+  // ExampleCustomInput = ({ value, onClick }) => (
+  //   <button className="datepickerFrontButton" onClick={onClick}>
+  //     {value}
+  //   </button>
+  // );
+
   render() {
     return (
       <div className="container">
-        <h1>NZBat Assessment Dates</h1>
-        <Toggle
-          // id="cheese-status"
+        <header className="header">
+          <div className="title">
+            <h1>NZBat Assessment Dates</h1>
+          </div>
+        </header>
+
+        {/* <Toggle
+
           defaultChecked={this.state.ShowHolidays}
           onChange={this.ShowHolidaysChange}
         />
-        <label htmlFor="cheese-status">Show Holidays</label>
-
-        <Toggle
-          //  id="cheese-status"
-          defaultChecked={this.state.CalculateHolidays}
-          onChange={this.CalculateHolidaysChange}
-        />
-        <label htmlFor="cheese-status">Calculate Holidays</label>
-        <span>
+        <label htmlFor="cheese-status">Show Holidays</label> */}
+        <div className="containerSub">
+          Select Your Start Date
           <DatePicker
+            todayButton="Today"
             selected={this.state.startDate}
             onChange={this.handleChange}
             withPortal
@@ -85,13 +92,24 @@ class Home extends React.Component {
             onCalendarClose={this.handleCalendarClose}
             onCalendarOpen={this.handleCalendarOpen}
             dateFormat="dd/MM/yyy"
+            // customInput={this.ExampleCustomInput}
           />
-          <h3>Course Start Date: {this.state.startDate.toDateString()}</h3>
-        </span>
+          <Toggle
+            defaultChecked={this.state.CalculateHolidays}
+            onChange={this.CalculateHolidaysChange}
+          />
+          <label htmlFor="cheese-status">Calculate effect of Holidays</label>
+          <h3>
+            Course Start Date:
+            {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}
+          </h3>
+        </div>
+
         <Table2
           startDate={this.state.startDate.toDateString()}
           ShowHolidays={this.state.ShowHolidays}
-          CalculateHolidays={this.state.CalculateHolidays}></Table2>
+          CalculateHolidays={this.state.CalculateHolidays}
+        ></Table2>
 
         <h3>Holiday Dates</h3>
 
@@ -99,7 +117,10 @@ class Home extends React.Component {
           return (
             <ul className="list-group list-group-flush">
               <li key={item.name}>
-                {item.name} {item.startDate}
+                {item.name}{" "}
+                {moment(item.startDate, "DD-MM-YY").format(
+                  "dddd, MMMM Do YYYY"
+                )}
               </li>
             </ul>
           );

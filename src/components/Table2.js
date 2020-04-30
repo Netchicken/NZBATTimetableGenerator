@@ -1,6 +1,6 @@
 import React from "react";
 //import loadAssessmentsFile from "./Assessments";
-import { useTable } from "react-table"; //https://react-table.js.org/installation
+import { useTable, useFlexLayout, useResizeColumns } from "react-table"; //https://react-table.js.org/installation
 import styled from "styled-components";
 //import assessemnts from "../Assets/Assessments.json";
 //import collegeHolidays from "../Assets/Holidays.json";
@@ -23,6 +23,9 @@ const Styles = styled.div`
     border: 1px solid black;
 
     tr {
+      :hover {
+        background-color: #f5f5f5;
+      }
       :last-child {
         td {
           border-bottom: 0;
@@ -35,7 +38,7 @@ const Styles = styled.div`
       margin: 0;
       padding: 0.5rem;
       border-bottom: 1px solid black;
-      border-right: 1px solid black;
+      /* border-right: 1px solid black; */
 
       :last-child {
         border-right: 0;
@@ -53,11 +56,17 @@ function Table({ columns, data }) {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({
-    columns,
-    data,
-  });
+  } = useTable(
+    {
+      columns,
+      data,
+    },
 
+    // hooks for resizing
+    // useFlexLayout,
+    useResizeColumns
+  );
+  //https://medium.com/@blaiseiradukunda/react-table-7-tutorial-3d8ba6ac8b16 excellent tutorial
   // Render the UI for your table
   return (
     <table {...getTableProps()}>
@@ -146,10 +155,10 @@ function Table2(props) {
       {
         Header: "NZBAT Assessment TimeTable",
         columns: [
-          {
-            Header: "ID",
-            accessor: "id",
-          },
+          // {
+          //   Header: "ID",
+          //   accessor: "id",
+          // },
           {
             Header: "Module",
             accessor: "group",
@@ -164,17 +173,18 @@ function Table2(props) {
           },
 
           {
-            Header: "Date Due",
+            Header: "Assessment Due",
             accessor: "DueDate",
           },
           {
             Header: "Break",
             accessor: "holiday",
           },
-          {
-            Header: "days",
-            accessor: "days",
-          },
+          // ,
+          // {
+          //   Header: "days",
+          //   accessor: "days"
+          // }
         ],
       },
     ],

@@ -8,20 +8,21 @@ export function loadAssessmentsFile(
   ShowHolidays,
   CalculateHolidays
 ) {
-  const data = assessemnts; //load from file
+  const assessmentData = assessemnts; //load from file
   const holidaysData = collegeHolidays; //load from file
+
   var addDaysAfterBreak = 0; //must be global
   console.log("date.js dateStart in", startDate);
   var date = new Date(startDate); //convert string to date
 
   //loop through each entry and calculate dates adding days to assessment
   //moment(date, "DD-MM-YY") this is only parsing date, not formatting date
-  const AssWithDates = data.map((item) => {
+  const AssWithDates = assessmentData.map(item => {
     //add startdate to days for each assessment return new date
     var newdate = new Date(moment(date, "DD-MM-YY").add(item.days, "d"));
     newdate = moment(newdate).format("DD-MM-YY");
     // console.log("date.js newdate", newdate);
-
+    item.holiday = ""; //remove any text
     //todo Fix formatting with localenewdate; //
     item.DueDate = newdate; //    moment(newdate).format("dddd, MMMM Do YY"); //format date for viewing
     console.log("out ", item.DueDate + " " + item.holiday);
@@ -29,19 +30,19 @@ export function loadAssessmentsFile(
   });
 
   //Pass in the entire Array instead of nesting it.
-  // if (CalculateHolidays) {
-  //compare holiday dates with assessment dates
-  const outputdata = HolidayMap(
-    AssWithDates,
-    addDaysAfterBreak,
-    ShowHolidays,
-    holidaysData
-  );
+  if (CalculateHolidays) {
+    //compare holiday dates with assessment dates
+    const outputdata = HolidayMap(
+      AssWithDates,
+      addDaysAfterBreak,
+      ShowHolidays,
+      holidaysData
+    );
 
-  return outputdata;
-  // }
+    return outputdata;
+  }
 
-  // return AssWithDates;
+  return AssWithDates;
 }
 
 //newdate = startdate + days to assesment
@@ -56,8 +57,8 @@ function HolidayMap(
 
   var allHolidays = GenerateHolidayDates(holidaysData);
 
-  AssWithDates.map((item) => {
-    allHolidays.map((item2) => {
+  AssWithDates.map(item => {
+    allHolidays.map(item2 => {
       //console.log("date match assess date ", newdate);
 
       //if the day is in the holiday dates
@@ -77,19 +78,19 @@ function HolidayMap(
             item2.daysbreak[item2.daysbreak.length - 1]
         );
 
+        item.holiday = item2.name + " Break";
+
         //   if (ShowHolidays) {
         // count days to add to next assessments
         addDaysAfterBreak += addDaysAfterBreakF(oldDueDate, item.DueDate); //covers multiple holidays
         console.log("date addDaysAfterBreak ", addDaysAfterBreak);
         // }
 
-        item.holiday = item2.name + " Break";
-
         //    newdate.add(item.days,"d"); //add in the holidays
 
         //if there IS NO match with the holidays, then you still need to add on the difference for the LAST holiday up the tree, all dates get pushed later.
       } else {
-        item.holiday = "no";
+        //item.holiday = "no";
       }
       //   if (addDaysAfterBreak !== isNaN) {
       //     item.DueDate = new Date(
@@ -107,9 +108,9 @@ function HolidayMap(
 }
 //Find the difference between dates and add them to assessment dates https://www.sitepoint.com/managing-dates-times-using-moment-js/
 function addDaysAfterBreakF(oldNewDate, newdate) {
-  const dateOld = moment(oldNewDate);
-  const dateNew = moment(newdate); //.format("DD-MM-YY").toString();
-  return dateOld.diff(dateNew, "days"); //covers multiple holidays
+  const dateOld = moment(oldNewDate, "DD-MM-YY");
+  const dateNew = moment(newdate, "DD-MM-YY"); //.format("DD-MM-YY").toString();
+  return dateNew.diff(dateOld, "days"); //covers multiple holidays
 }
 
 export function GetHolidayData() {
@@ -122,7 +123,7 @@ export function GetHolidayData() {
 export function GenerateHolidayDates() {
   //push all the days that are a break to daysbreak array
   const holidaysData = collegeHolidays; //load from file THIS IS NOT GOOD!!!!
-  const allHolidays = holidaysData.map((item) => {
+  const allHolidays = holidaysData.map(item => {
     var holidayStartDate = new Date(moment(item.startDate, "DD-MM-YY")); //turn the date string to a date
     //loop through the days and add 1
     var i = 1;

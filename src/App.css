@@ -13,12 +13,21 @@ body {
   /* display: flex;
   flex-flow: row wrap; */
   font-weight: bold;
-  text-align: center;
+  /* text-align: center; */
 }
-/* We tell all items to be 100% width, via flex-basis */
-.container > * {
-  padding: 10px;
-  flex: 1 100%;
+.containerSub {
+  border-radius: 8px;
+  margin-top: 0px;
+  margin-left: 10%;
+  margin-right: 10%;
+  max-width: 100%;
+  height: auto;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
+  padding-left: 10%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  /* padding: 10px; */
+  background: white;
 }
 
 .header {
@@ -27,54 +36,6 @@ body {
   /* display:block;position:absolute; */
 }
 
-.footer {
-  /* background: lightgreen; */
-}
-
-.main {
-  /* text-align: left; */
-  /* background: deepskyblue; */
-}
-
-.aside-1 {
-  /* background: gold; */
-}
-
-.aside-2 {
-  /* background: hotpink; */
-}
-
-@media all and (min-width: 600px) {
-  .aside {
-    flex: 1 auto;
-  }
-}
-
-@media all and (min-width: 800px) {
-  .main {
-    flex: 2 0px;
-  }
-  .aside-1 {
-    order: 1;
-  }
-  .main {
-    order: 2;
-  }
-  .aside-2 {
-    order: 3;
-  }
-  .footer {
-    order: 4;
-  }
-}
-
-/* .title {
-  color: #fff;
-  font-size: 48px;
-  font-weight: bold;
-  text-align: center;
-    text-shadow: 1px px rgba(50, 50, 70, 0.5);
-} */
 h2 h3 {
   color: rgb(194, 12, 240);
   font-size: 40px;
@@ -150,7 +111,7 @@ h1 {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Titan One", cursive;
+  /* font-family: "Titan One", cursive; */
   font-size: 60px;
   font-weight: 700;
   align-content: center;
@@ -158,4 +119,28 @@ h1 {
   background: -webkit-linear-gradient(#eee, rgb(25, 61, 160));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.react-datepicker {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 0.8rem !important;
+  background-color: rgb(182, 150, 150) !important;
+  color: #000 !important;
+  border: 0px !important;
+  border-radius: 0 !important;
+  display: inline-block !important;
+  position: relative !important;
+}
+
+.datepickerFrontButton {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  border-radius: 12px;
 }
