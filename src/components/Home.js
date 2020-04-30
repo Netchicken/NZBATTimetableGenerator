@@ -79,6 +79,8 @@ class Home extends React.Component {
         />
         <label htmlFor="cheese-status">Show Holidays</label> */}
         <div className="containerSub">
+          <div className="row">
+            <div className="column">
           1. Select Your Start Date
           <DatePicker
             todayButton="Today"
@@ -102,8 +104,12 @@ class Home extends React.Component {
           <h3>
             Course Start Date:
             {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}
-          </h3>
-        </div>
+              </h3>
+              </div>
+
+              <div className="column">Calculate your assessment due dates with this simple app.<br></br> Enter your Startdate. The generated Assessment Dates don't include school holidays. <br></br>Click on Include holidays to see altered dates. <br></br>Students can hand assessments in after a break, instead of in the middle of a break
+              </div>
+      </div>  </div>
 
         <Table2
           startDate={this.state.startDate.toDateString()}
