@@ -171,7 +171,7 @@ function Table2(props) {
             accessor: "group",
           },
           {
-            Header: "Assessment ID",
+            Header: "ID",
             accessor: "AssID",
           },
           {
